@@ -1,3 +1,16 @@
+# Fuerza que los videos sean servidos directo desde el CDN de Netlify
+# sin pasar por las funciones serverless de Next.js
+[[redirects]]
+  from = "/vsl-guia.mp4"
+  to = "/vsl-guia.mp4"
+  status = 200
+  force = true
+  [redirects.headers]
+    Content-Type = "video/mp4"
+    Accept-Ranges = "bytes"
+    Cache-Control = "public, max-age=31536000, immutable"
+    X-Robots-Tag = "noindex"
+
 [[headers]]
   for = "/*.mp4"
   [headers.values]
