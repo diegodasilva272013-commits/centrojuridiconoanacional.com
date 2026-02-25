@@ -14,7 +14,5 @@ out/
 *.pem
 npm-debug.log*
 
-# videos (archivos grandes – no subir a GitHub)
-public/*.mp4
-public/*.webm
-public/*.mov
+# videos grandes – rastreados con Git LFS (ver .gitattributes)
+# public/*.mp4  <- manejado por LFS
