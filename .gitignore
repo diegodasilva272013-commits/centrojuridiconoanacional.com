@@ -13,3 +13,8 @@ out/
 .DS_Store
 *.pem
 npm-debug.log*
+
+# videos (archivos grandes – no subir a GitHub)
+public/*.mp4
+public/*.webm
+public/*.mov
