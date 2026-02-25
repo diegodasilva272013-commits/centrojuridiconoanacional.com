@@ -24,7 +24,7 @@ export default function VideoSection() {
         <SectionReveal delay={0.1} className="w-full">
           <div className="w-full rounded-2xl overflow-hidden border border-[#eaeaea] shadow-card bg-[#0b0b0b]">
             <video
-              src="/vsl guia.mp4"
+              src="/vsl%20guia.mp4"
               controls
               playsInline
               preload="metadata"
