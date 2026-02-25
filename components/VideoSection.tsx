@@ -27,7 +27,7 @@ export default function VideoSection() {
               src="/vsl-guia.mp4"
               controls
               playsInline
-              preload="metadata"
+              preload="auto"
               className="w-full h-auto block"
               aria-label="Guía de Jubilación – Centro Jurídico NOA"
             />
