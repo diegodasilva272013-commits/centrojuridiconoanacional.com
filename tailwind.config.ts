@@ -15,6 +15,8 @@ const config: Config = {
         wa: "#25D366",
         "wa-hover": "#1EBE5D",
         border: "#eaeaea",
+        mp: "#009EE3",
+        "mp-hover": "#0080C0",
       },
       fontFamily: {
         sans: [
@@ -36,6 +38,7 @@ const config: Config = {
         "card-hover":
           "0 8px 32px 0 rgba(0,0,0,0.12), 0 2px 8px 0 rgba(0,0,0,0.06)",
         "wa-btn": "0 4px 20px 0 rgba(37,211,102,0.28)",
+        "mp-btn": "0 4px 20px 0 rgba(0,158,227,0.30)",
       },
       keyframes: {
         grain: {

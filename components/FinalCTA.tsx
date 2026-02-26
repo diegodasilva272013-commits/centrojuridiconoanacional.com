@@ -2,6 +2,7 @@
 
 import SectionReveal from "./SectionReveal";
 import WhatsAppButton from "./WhatsAppButton";
+import MercadoPagoButton from "./MercadoPagoButton";
 
 export default function FinalCTA() {
   return (
@@ -31,11 +32,22 @@ export default function FinalCTA() {
         </SectionReveal>
 
         <SectionReveal delay={0.2} className="flex justify-center w-full">
-          <WhatsAppButton
-            label="👉 QUIERO MI GUÍA POR WHATSAPP"
-            section="final"
-            size="large"
-          />
+          <div className="flex flex-col items-center gap-3 w-full">
+            <MercadoPagoButton
+              label="💳 COMPRAR CON MERCADO PAGO"
+              size="large"
+            />
+            <div className="flex items-center gap-3 w-full sm:max-w-[420px]">
+              <div className="flex-1 h-px bg-white/20" />
+              <span className="text-metal-light/60 text-xs font-medium">o consultá por WhatsApp</span>
+              <div className="flex-1 h-px bg-white/20" />
+            </div>
+            <WhatsAppButton
+              label="👉 QUIERO MI GUÍA POR WHATSAPP"
+              section="final"
+              size="large"
+            />
+          </div>
         </SectionReveal>
       </div>
     </section>

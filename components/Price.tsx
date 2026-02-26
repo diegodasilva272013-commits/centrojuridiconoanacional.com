@@ -2,6 +2,7 @@
 
 import SectionReveal from "./SectionReveal";
 import WhatsAppButton from "./WhatsAppButton";
+import MercadoPagoButton from "./MercadoPagoButton";
 import { motion, useReducedMotion } from "framer-motion";
 
 export default function Price() {
@@ -36,7 +37,7 @@ export default function Price() {
 
             {/* Destacado */}
             <p className="text-carbon text-3xl sm:text-4xl font-bold mt-2 mb-1">
-              <span className="text-wa">💲</span> $19.900
+              <span className="text-wa">💲</span> $21.900
             </p>
             <p className="text-metal-mid text-xs sm:text-sm font-semibold tracking-wide uppercase mb-1">
               Precio SOLO POR HOY
@@ -52,11 +53,22 @@ export default function Price() {
         </SectionReveal>
 
         <SectionReveal delay={0.2} className="flex justify-center w-full">
-          <WhatsAppButton
-            label="👉 QUIERO MI GUÍA AHORA"
-            section="price"
-            size="large"
-          />
+          <div className="flex flex-col items-center gap-3 w-full">
+            <MercadoPagoButton
+              label="💳 COMPRAR CON MERCADO PAGO"
+              size="large"
+            />
+            <div className="flex items-center gap-3 w-full sm:max-w-[420px]">
+              <div className="flex-1 h-px bg-[#eaeaea]" />
+              <span className="text-metal-mid text-xs font-medium">o si preferís hablar primero</span>
+              <div className="flex-1 h-px bg-[#eaeaea]" />
+            </div>
+            <WhatsAppButton
+              label="👉 CONSULTAR POR WHATSAPP"
+              section="price"
+              size="large"
+            />
+          </div>
         </SectionReveal>
       </div>
     </section>

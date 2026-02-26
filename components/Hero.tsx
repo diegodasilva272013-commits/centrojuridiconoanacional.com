@@ -3,6 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import WhatsAppButton from "./WhatsAppButton";
+import MercadoPagoButton from "./MercadoPagoButton";
 
 export default function Hero() {
   const prefersReduced = useReducedMotion();
@@ -57,11 +58,22 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
           className="w-full flex justify-center"
         >
-          <WhatsAppButton
-            label="👉 QUIERO MI GUÍA AHORA"
-            section="hero"
-            size="large"
-          />
+          <div className="flex flex-col items-center gap-3 w-full">
+            <MercadoPagoButton
+              label="💳 COMPRAR CON MERCADO PAGO"
+              size="large"
+            />
+            <div className="flex items-center gap-3 w-full sm:max-w-[420px]">
+              <div className="flex-1 h-px bg-white/20" />
+              <span className="text-metal-light/60 text-xs font-medium">o preferís hablar primero</span>
+              <div className="flex-1 h-px bg-white/20" />
+            </div>
+            <WhatsAppButton
+              label="👉 CONSULTAR POR WHATSAPP"
+              section="hero"
+              size="large"
+            />
+          </div>
         </motion.div>
 
         {/* Floating card */}
