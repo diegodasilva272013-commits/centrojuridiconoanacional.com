@@ -49,8 +49,13 @@ export async function POST() {
 
     return NextResponse.json({ init_point: result.init_point });
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : "Error desconocido";
-    console.error("[MP create-preference]", msg);
+    let msg = "Error desconocido";
+    if (err instanceof Error) {
+      msg = err.message;
+    } else if (typeof err === "object" && err !== null) {
+      msg = JSON.stringify(err);
+    }
+    console.error("[MP create-preference] Error:", msg);
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
