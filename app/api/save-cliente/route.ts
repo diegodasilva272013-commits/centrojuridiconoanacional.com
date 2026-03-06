@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { error: dbError, count } = await supabase
+  const { error: dbError, data: updated } = await supabase
     .from("clientes")
     .update({
       nombre_form: nombre,
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       celular_form: celular,
     })
     .eq("mp_payment_id", payment_id)
-    .select("id", { count: "exact" });
+    .select();
 
   if (dbError) {
     console.error("[save-cliente] Supabase error:", dbError.message);
@@ -42,8 +42,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Si no actualizó ninguna fila, el mp_payment_id no existe aún — insertar
-  if (!count || count === 0) {
+  // Si no actualizó ninguna fila, insertar directamente
+  if (!updated || updated.length === 0) {
     const { error: insertError } = await supabase.from("clientes").insert({
       nombre_form: nombre,
       apellido_form: apellido,
