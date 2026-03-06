@@ -79,18 +79,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Guardar preference_id en la fila que acabamos de insertar
-    if (result.id) {
-      await supabase
-        .from("clientes")
-        .update({ preference_id: result.id })
-        .eq("nombre_form", nombre_form)
-        .eq("apellido_form", apellido_form)
-        .eq("celular_form", celular_form)
-        .order("created_at", { ascending: false })
-        .limit(1);
-    }
-
     return NextResponse.json({ init_point: result.init_point });
   } catch (err: unknown) {
     let msg = "Error desconocido";
