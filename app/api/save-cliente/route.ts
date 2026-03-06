@@ -24,14 +24,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { error: dbError } = await supabase
+  const { error: dbError, count } = await supabase
     .from("clientes")
     .update({
       nombre_form: nombre,
       apellido_form: apellido,
       celular_form: celular,
     })
-    .eq("mp_payment_id", payment_id);
+    .eq("mp_payment_id", payment_id)
+    .select("id", { count: "exact" });
 
   if (dbError) {
     console.error("[save-cliente] Supabase error:", dbError.message);
@@ -39,6 +40,23 @@ export async function POST(req: NextRequest) {
       { error: "No se pudieron guardar los datos. Intentá de nuevo." },
       { status: 500 }
     );
+  }
+
+  // Si no actualizó ninguna fila, el mp_payment_id no existe aún — insertar
+  if (!count || count === 0) {
+    const { error: insertError } = await supabase.from("clientes").insert({
+      nombre_form: nombre,
+      apellido_form: apellido,
+      celular_form: celular,
+      mp_payment_id: payment_id,
+    });
+    if (insertError) {
+      console.error("[save-cliente] Supabase insert error:", insertError.message);
+      return NextResponse.json(
+        { error: "No se pudieron guardar los datos. Intentá de nuevo." },
+        { status: 500 }
+      );
+    }
   }
 
   return NextResponse.json({ ok: true });
