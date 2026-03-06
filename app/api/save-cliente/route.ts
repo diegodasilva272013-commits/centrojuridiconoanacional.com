@@ -59,5 +59,27 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // ── Disparar n8n con todos los datos del cliente ──────────────────────────
+  try {
+    await fetch(
+      "https://setteriaarete-n8n.ts3f2b.easypanel.host/webhook/mercadopago-webhook",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre_form: nombre,
+          apellido_form: apellido,
+          celular_form: celular,
+          payment_id,
+          preference_id,
+          mp_status: "approved",
+        }),
+      }
+    );
+  } catch (err) {
+    // No bloqueamos la respuesta al cliente si n8n falla
+    console.error("[save-cliente] n8n webhook error:", err);
+  }
+
   return NextResponse.json({ ok: true });
 }
