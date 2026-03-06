@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       apellido_form: apellido,
       celular_form: celular,
     })
-    .eq("mp_payment_id", payment_id)
+    .ilike("mp_payment_id", `${payment_id}%`)
     .select();
 
   console.log("[save-cliente] filas actualizadas:", updated?.length ?? 0, "| error:", dbError?.message ?? "ninguno");
