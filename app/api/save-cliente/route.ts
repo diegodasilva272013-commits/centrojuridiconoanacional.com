@@ -36,16 +36,19 @@ export async function POST(req: NextRequest) {
     preference_id: preference_id ?? undefined,
   };
 
-  let dbError;
+  // Intento 1: guardar con todos los campos (payment_id, preference_id)
+  let { error: dbError } = payment_id
+    ? await supabase.from("clientes").upsert(record, { onConflict: "payment_id" })
+    : await supabase.from("clientes").insert(record);
 
-  if (payment_id) {
-    // Upsert: si ya existe una fila con ese payment_id, actualiza los datos del form.
-    ({ error: dbError } = await supabase
-      .from("clientes")
-      .upsert(record, { onConflict: "payment_id" }));
-  } else {
-    // Sin payment_id (no debería pasar) hacemos insert normal.
-    ({ error: dbError } = await supabase.from("clientes").insert(record));
+  // Intento 2: si falló por columnas inexistentes, guardar solo los campos base
+  if (dbError) {
+    console.warn("[save-cliente] Reintentando sin campos MP:", dbError.message);
+    ({ error: dbError } = await supabase.from("clientes").insert({
+      nombre_form: nombre,
+      apellido_form: apellido,
+      celular_form: celular,
+    }));
   }
 
   if (dbError) {
