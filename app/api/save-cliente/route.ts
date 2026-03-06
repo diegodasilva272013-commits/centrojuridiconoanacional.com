@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       apellido_form: apellido,
       celular_form: celular,
     })
-    .eq("payment_id", payment_id);
+    .eq("mp_payment_id", payment_id);
 
   if (dbError) {
     console.error("[save-cliente] Supabase error:", dbError.message);
