@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  console.log("[save-cliente] payment_id recibido:", payment_id);
+
   const { error: dbError, data: updated } = await supabase
     .from("clientes")
     .update({
@@ -33,6 +35,8 @@ export async function POST(req: NextRequest) {
     })
     .eq("mp_payment_id", payment_id)
     .select();
+
+  console.log("[save-cliente] filas actualizadas:", updated?.length ?? 0, "| error:", dbError?.message ?? "ninguno");
 
   if (dbError) {
     console.error("[save-cliente] Supabase error:", dbError.message);
