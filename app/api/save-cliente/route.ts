@@ -17,19 +17,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Payload inválido." }, { status: 400 });
   }
 
-  if (!nombre || !apellido || !celular) {
+  if (!nombre || !apellido || !celular || !payment_id) {
     return NextResponse.json(
-      { error: "Nombre, apellido y celular son obligatorios." },
+      { error: "Todos los campos son obligatorios." },
       { status: 400 }
     );
   }
 
-  const { error: dbError } = await supabase.from("clientes").insert({
-    nombre_form: nombre,
-    apellido_form: apellido,
-    celular_form: celular,
-    payment_id: payment_id ?? undefined,
-  });
+  const { error: dbError } = await supabase
+    .from("clientes")
+    .update({
+      nombre_form: nombre,
+      apellido_form: apellido,
+      celular_form: celular,
+    })
+    .eq("payment_id", payment_id);
 
   if (dbError) {
     console.error("[save-cliente] Supabase error:", dbError.message);
