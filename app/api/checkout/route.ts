@@ -35,10 +35,13 @@ export async function POST(req: NextRequest) {
   }
 
   // ── 1. Guardar cliente en Supabase ────────────────────────────────────────
+  const external_reference = crypto.randomUUID();
+
   const { error: dbError } = await supabase.from("clientes").insert({
     nombre_form,
     apellido_form,
     celular_form,
+    external_reference,
   });
 
   if (dbError) {
@@ -69,6 +72,7 @@ export async function POST(req: NextRequest) {
           surname: apellido_form,
           phone: { number: celular_form },
         },
+        external_reference,
         back_urls: {
           success: `${BASE_URL}/pago/exito`,
           failure: `${BASE_URL}/pago/error`,
