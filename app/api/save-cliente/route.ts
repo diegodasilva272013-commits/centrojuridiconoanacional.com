@@ -27,9 +27,9 @@ export async function POST(req: NextRequest) {
   const { error: dbError, data: updated } = await supabase
     .from("clientes")
     .update({
-      nombre: nombre,
-      apellido: apellido,
-      celular: celular,
+      nombre_form: nombre,
+      apellido_form: apellido,
+      celular_form: celular,
     })
     .eq("mp_payment_id", payment_id)
     .select();
@@ -45,9 +45,9 @@ export async function POST(req: NextRequest) {
   // Si no actualizó ninguna fila, insertar directamente
   if (!updated || updated.length === 0) {
     const { error: insertError } = await supabase.from("clientes").insert({
-      nombre: nombre,
-      apellido: apellido,
-      celular: celular,
+      nombre_form: nombre,
+      apellido_form: apellido,
+      celular_form: celular,
       mp_payment_id: payment_id,
     });
     if (insertError) {
