@@ -92,7 +92,7 @@ function PagoExitoContent() {
                 <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} required placeholder="Ej: González" className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Celular <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">Celular con característica <span className="text-red-500">*</span><span className="block text-xs font-normal text-gray-500 mt-0.5">Ingresá el número completo con código de área (ej: 11 1234-5678)</span></label>
                 <input type="tel" value={celular} onChange={(e) => setCelular(e.target.value)} required placeholder="Ej: 11 1234-5678" className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition" />
               </div>
               {error && <p className="text-red-500 text-xs text-center">⚠️ {error}</p>}
