@@ -15,9 +15,30 @@ function PagoExitoContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{ nombre?: string; apellido?: string; celular?: string }>({});
+
+  function validateCelular(value: string): boolean {
+    // Acepta formato argentino: 10 dígitos al eliminar espacios, guiones y paréntesis
+    // Ej: "11 1234-5678", "3516 123456", "1112345678", "(011) 1234-5678"
+    const digits = value.replace(/[\s\-\(\)]/g, "");
+    return /^\d{10}$/.test(digits);
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const errors: { nombre?: string; apellido?: string; celular?: string } = {};
+    if (!nombre.trim()) errors.nombre = "El nombre es obligatorio.";
+    if (!apellido.trim()) errors.apellido = "El apellido es obligatorio.";
+    if (!celular.trim()) {
+      errors.celular = "El celular es obligatorio.";
+    } else if (!validateCelular(celular)) {
+      errors.celular = "Ingresá un número válido con código de área, 10 dígitos en total (ej: 11 1234-5678).";
+    }
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
     setLoading(true);
     setError(null);
     try {
@@ -85,15 +106,36 @@ function PagoExitoContent() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Nombre <span className="text-red-500">*</span></label>
-                <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required placeholder="Ej: María" className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition" />
+                <input
+                  type="text"
+                  value={nombre}
+                  onChange={(e) => { setNombre(e.target.value); setFieldErrors((p) => ({ ...p, nombre: undefined })); }}
+                  placeholder="Ej: María"
+                  className={`w-full rounded-xl border bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition ${fieldErrors.nombre ? "border-red-400 bg-red-50" : "border-gray-200"}`}
+                />
+                {fieldErrors.nombre && <p className="text-red-500 text-xs mt-1">{fieldErrors.nombre}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Apellido <span className="text-red-500">*</span></label>
-                <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} required placeholder="Ej: González" className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition" />
+                <input
+                  type="text"
+                  value={apellido}
+                  onChange={(e) => { setApellido(e.target.value); setFieldErrors((p) => ({ ...p, apellido: undefined })); }}
+                  placeholder="Ej: González"
+                  className={`w-full rounded-xl border bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition ${fieldErrors.apellido ? "border-red-400 bg-red-50" : "border-gray-200"}`}
+                />
+                {fieldErrors.apellido && <p className="text-red-500 text-xs mt-1">{fieldErrors.apellido}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Celular con característica <span className="text-red-500">*</span><span className="block text-xs font-normal text-gray-500 mt-0.5">Ingresá el número completo con código de área (ej: 11 1234-5678)</span></label>
-                <input type="tel" value={celular} onChange={(e) => setCelular(e.target.value)} required placeholder="Ej: 11 1234-5678" className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition" />
+                <input
+                  type="tel"
+                  value={celular}
+                  onChange={(e) => { setCelular(e.target.value); setFieldErrors((p) => ({ ...p, celular: undefined })); }}
+                  placeholder="Ej: 11 1234-5678"
+                  className={`w-full rounded-xl border bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-mp focus:border-transparent transition ${fieldErrors.celular ? "border-red-400 bg-red-50" : "border-gray-200"}`}
+                />
+                {fieldErrors.celular && <p className="text-red-500 text-xs mt-1">{fieldErrors.celular}</p>}
               </div>
               {error && <p className="text-red-500 text-xs text-center">⚠️ {error}</p>}
               <button type="submit" disabled={loading} className="mt-2 w-full inline-flex items-center justify-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white font-semibold rounded-xl min-h-[52px] px-6 py-3 text-sm sm:text-base transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
