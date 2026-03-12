@@ -30,7 +30,7 @@ export async function POST() {
             description:
               "Guía digital paso a paso para tramitar tu jubilación en Argentina.",
             quantity: 1,
-            unit_price: 21900,
+            unit_price: 100,
             currency_id: "ARS",
           },
         ],
