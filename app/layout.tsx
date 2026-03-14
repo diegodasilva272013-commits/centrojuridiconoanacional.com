@@ -58,7 +58,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es-AR">
-      <head>
+      <body className="bg-white text-carbon antialiased">
+        {children}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -73,8 +74,7 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
-      </head>
-      <body className="bg-white text-carbon antialiased">{children}</body>
+      </body>
     </html>
   );
 }
