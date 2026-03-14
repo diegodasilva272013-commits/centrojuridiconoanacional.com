@@ -28,6 +28,9 @@ export default function MercadoPagoButton({
         setError(data.error ?? "No se pudo iniciar el pago. Intentá de nuevo.");
         return;
       }
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq("track", "InitiateCheckout");
+      }
       window.location.href = data.init_point;
     } catch {
       setError("Error de conexión. Verificá tu internet e intentá de nuevo.");

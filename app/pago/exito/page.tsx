@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -8,6 +8,12 @@ function PagoExitoContent() {
   const searchParams = useSearchParams();
   const paymentId = searchParams.get("payment_id") ?? searchParams.get("collection_id");
   const status = searchParams.get("status") ?? searchParams.get("collection_status");
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "Purchase", { currency: "ARS", value: 0 });
+    }
+  }, []);
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
